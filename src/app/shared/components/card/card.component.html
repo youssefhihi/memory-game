@@ -1,0 +1,15 @@
+<!-- card.component.html -->
+<div class="flex flex-wrap justify-center items-center gap-5 mt-10">
+  <!-- Loop through the shuffled sequence and create a card for each color -->
+  <div *ngFor="let card of shuffledSequence" class="relative">
+    <button
+      [@illuminate]="cardStates[card.order]"
+      [style.backgroundColor]="card.colorHex"
+      (click)="onCardClick(card)"
+      class="w-24 h-24 rounded-xl border-4 border-gray-800 transition-all"
+    >
+    {{ card.order }}</button>
+  </div>
+ 
+</div>
+

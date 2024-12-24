@@ -1,0 +1,34 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <!-- Game Title -->
+    <h1 class="text-4xl font-extrabold text-gray-800 mb-8">Memory Game</h1>
+  
+
+  
+
+      <div class="mb-8">
+      <p class="text-xl font-semibold mb-4">Reproduce the sequence:</p>
+        <div class="grid grid-cols-2 gap-4">
+            <app-card [sequence]="sequence"></app-card>      
+        </div>
+    </div>
+  
+    <!-- Time Remaining -->
+    <div class="mb-8">
+      <p class="text-lg">Time Remaining: <span class="font-bold">15s</span></p>
+    </div>
+  
+    <!-- Validation & Reset Buttons -->
+    <div class="mb-8 flex space-x-4">
+      <button class="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">Valider</button>
+      <button class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
+    </div>
+  
+    <!-- Game Over Message -->
+    <div class="text-center mt-8">
+      <p class="text-2xl font-bold text-red-500">Game Over!</p>
+      <p class="text-lg">Your score: <span class="font-bold">150</span></p>
+      <button class="mt-4 bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Try Again</button>
+    </div>
+  </div>
+  
+

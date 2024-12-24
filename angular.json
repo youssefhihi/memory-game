@@ -3,9 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "memory-game": {
+    "memoryGame": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -64,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "memory-game:build:production"
+              "buildTarget": "memoryGame:build:production"
             },
             "development": {
-              "buildTarget": "memory-game:build:development"
+              "buildTarget": "memoryGame:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -99,6 +109,6 @@
     }
   },
   "cli": {
-    "analytics": "97889ff3-6628-483d-bb56-e64c0a999a86"
+    "analytics": "7032a7f0-bf86-451c-a3d6-1f96359a9729"
   }
 }

@@ -1,0 +1,13 @@
+.card {
+    width: 200px;
+    height: 300px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  

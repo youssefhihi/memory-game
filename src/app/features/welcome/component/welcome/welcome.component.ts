@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-welcome',
-  imports: [FormsModule],
+  standalone: false,
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
 })
