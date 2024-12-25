@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WelcomeComponent } from './component/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -16,7 +17,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes),
     CommonModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
 
 })

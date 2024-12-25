@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { log } from 'console';
 import { Sequence } from '../../types/sequence';
 import { Answer } from '../../types/answer';
 
@@ -28,12 +27,19 @@ export class GameService {
   }
 
   checkAnswer(playerSequence: Answer): boolean {
+
+    if(playerSequence.playerSequence.length === 0){
+      console.log('No answer!');
+      this.gameOver();
+      return false;
+    }
+
     if(playerSequence.playerSequence.every((card, index) => card.order === this.sequence[index].order)){
         console.log('Correct! Generating new sequence... check');
         this.generateNewSequence();
         return true;
       }else{
-        console.log('Incorrect! Generating new sequence...');
+        console.log('Incorrect!');
         this.gameOver();
         return false;
     }

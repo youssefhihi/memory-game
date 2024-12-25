@@ -1,26 +1,47 @@
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    <!-- Game Title -->
-    <h1 class="text-4xl font-extrabold text-gray-800 mb-8">Memory Game</h1>
-    <div class="text-center mt-8">
-        <app-score/>
-        <p>level: {{level}}</p>
-      </div>
-
-  
-
-     
-      <p class="text-xl font-semibold mb-4">Reproduce the sequence:</p>
-            <app-card [sequence]="sequence" ></app-card>      
-     
-  
-            <div class="mb-8 flex space-x-4">
-                <button (click)="validateSequence()" class="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">Valider</button>
-                <button (click)="resetSequence()" class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
-              </div>
-              
-              <a routerLink="/result" class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300" > see result</a>
-  
-    
+<div class="bg-gradient-to-r from-gray-900 via-black to-gray-800">
+  <div class="absolute top-10 left-10 animate-bounce ">
+    <img src="imgs/logo.webp" alt="Star" class="w-12 h-12 opacity-70 rounded-full" />
   </div>
+  <div class="absolute top-10 right-48 rounded-full">
+    <h1 class=" text-right text-6xl font-extrabold text-yellow-400 animate__animated animate__fadeInDown shadow-lg">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Memory Game</span>
+    </h1>
+  </div>
+ 
+  <div class="flex flex-col md:flex-row items-center justify-between min-h-screen ">
+  <!-- Right Section: Card Display -->
+  <div class="flex items-center justify-center w-full md:w-1/2 p-8">
+    <div class="w-4/5 md:w-3/4 lg:w-full animate__animated animate__pulse overflow-y-scroll scrollbar-hide" style="max-height: 80vh;">
+        <app-card [sequence]="sequence"></app-card>
+    </div>
+  </div>
+  <!-- Left Section: Score and Buttons -->
+  <div class="flex flex-col items-center w-full md:w-1/2 p-8 space-y-20">
+    <!-- Game Title -->
+
+    <div class="flex justify-evenly w-full text-center animate__animated animate__fadeInUp">
+      <p class="text-3xl text-white font-bold shadow-sm bg-clip-text text-transparent bg-gradient-to-r from-red-800 via-purple-500 to-pink-600">Level: <span class="text-yellow-300 font-mono">{{ level }}</span></p>
+      <app-score></app-score>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-evenly w-full animate__animated animate__fadeInUp">
+      <app-button [disabled]="isPlaying()" (click)="resetSequence()" [value]="'Reset'" class="rounded-full bg-red-600 shadow-[inset_0px_2px_4px_0px_#f8e0e0,inset_0px_-2px_4px_0px_#f18c8c,0px_-2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0] active:shadow-[inset_0px_-2px_4px_0px_#f8e0e0,inset_0px_2px_4px_0px_#f18c8c,0px_2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0]"></app-button>
+      <app-button [disabled]="isPlaying()" (click)="validateSequence()" [value]="'Validate'" class=" rounded-full bg-green-600 shadow-[inset_0px_2px_4px_0px_#e4f4e3,inset_0px_-2px_4px_0px_#a8d5a4,0px_-2px_16px_0px_#a8d5a4,0px_2px_16px_0px_#e4f4e3] active:shadow-[inset_0px_-2px_4px_0px_#e4f4e3,inset_0px_2px_4px_0px_#a8d5a4,0px_2px_16px_0px_#a8d5a4,0px_2px_16px_0px_#e4f4e3]"></app-button>
+    </div>
+
+    <!-- See Result Button -->
+    <button routerLink="/result" (click)="resetSequence()" class="bg-green-600 text-white py-3 px-8 rounded-full text-lg hover:bg-green-400 transition-all duration-300 transform hover:scale-110 shadow-md">
+      <i class="fas fa-trophy mr-2"></i> See Result
+    </button>
+  </div>
+
   
 
+  <!-- Background Animation -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="animate-pulse absolute w-96 h-96 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 top-1/4 left-1/3"></div>
+    <div class="animate-pulse absolute w-72 h-72 bg-gradient-to-r from-pink-500 to-red-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 top-3/4 right-1/4"></div>
+    <div class="animate-pulse absolute w-60 h-60 bg-gradient-to-r from-purple-500 to-blue-500 opacity-20 rounded-full filter blur-2xl transform translate-x-1/4 -translate-y-1/4 top-56 right-28"></div>
+  </div>
+</div></div>
