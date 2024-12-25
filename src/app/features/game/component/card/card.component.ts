@@ -34,10 +34,12 @@ export class CardComponent implements OnChanges {
     }
   }
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) {
+    console.log("CardComponent heeeeeeeere")
+  }
 
      startCountdown() {
-      this.time = 15;
+      this.time = 5;
       this.ngZone.runOutsideAngular(() => {
         const intervalId = setInterval(() => {
           this.ngZone.run(() => {
@@ -94,5 +96,8 @@ export class CardComponent implements OnChanges {
     return this.playerSequence;
   }
 
+  resetSequence(): void {
+    this.playerSequence = { playerSequence: [], timeRemaining: 0 };
+  }
 
 }

@@ -1,7 +1,10 @@
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
     <!-- Game Title -->
     <h1 class="text-4xl font-extrabold text-gray-800 mb-8">Memory Game</h1>
-  
+    <div class="text-center mt-8">
+        <app-score/>
+        <p>level: {{level}}</p>
+      </div>
 
   
 
@@ -12,16 +15,12 @@
   
             <div class="mb-8 flex space-x-4">
                 <button (click)="validateSequence()" class="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">Valider</button>
-                <button class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
+                <button (click)="resetSequence()" class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
               </div>
               
+              <a routerLink="/result" class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300" > see result</a>
   
-    <!-- Game Over Message -->
-    <div class="text-center mt-8">
-      <p class="text-2xl font-bold text-red-500">Game Over!</p>
-      <p class="text-lg">Your score: <span class="font-bold">150</span></p>
-      <button class="mt-4 bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Try Again</button>
-    </div>
+    
   </div>
   
 

@@ -1,0 +1,63 @@
+<div class="result-container text-center p-5">
+    <h2 class="text-2xl font-bold mb-4 text-red-600">Game Over</h2>
+  
+    <div class="result-details mb-6">
+        <div class="flex flex-col justify-center">
+          <!-- Loop over results -->
+          <div *ngFor="let result of results" class="mb-8">
+            <div class="mb-4">
+              <p class="text-lg font-bold">Score: {{ result.score }}</p>
+              <p class="text-lg font-bold">Level: {{ result.level }}</p>
+            </div>
+      
+           <!-- Sequence Chosen -->
+<div>
+    <p class="text-center text-md font-semibold mb-4">Sequence Chosen</p>
+    <div
+      class="grid grid-cols-4 gap-2 justify-items-center bg-red-500 p-4 rounded-lg"
+    >
+      <div
+        *ngFor="let card of result.sequenceChosen"
+        [style.backgroundColor]="card.colorHex"
+        class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+      >
+        <span class="text-white font-medium">Order: {{ card.order }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sequence Correct -->
+  <div class="mt-10">
+    <p class="text-center text-md font-semibold mb-4">Sequence Correct</p>
+    <div
+      class="grid grid-cols-4 gap-2 justify-items-center bg-green-500 p-4 rounded-lg"
+    >
+      <div
+        *ngFor="let card of result.sequenceCorrect"
+        [style.backgroundColor]="card.colorHex"
+        class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+      >
+        <span class="text-white font-medium">Order: {{ card.order }}</span>
+      </div>
+    </div>
+  </div>
+  
+          </div>
+        </div>
+      </div>  
+    <div class="actions mt-4">
+      <button
+        class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+       
+      >
+        Play Again
+      </button>
+      <button
+        class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+       
+      >
+        Exit
+      </button>
+    </div>
+  </div>
+  

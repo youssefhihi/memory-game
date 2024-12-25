@@ -3,6 +3,10 @@ import { GameService } from '../../service/game/game.service';
 import { Sequence } from '../../types/sequence';
 import { CardComponent } from '../card/card.component';
 import { Answer } from '../../types/answer';
+import { ScoreComponent } from '../score/score/score.component';
+import { Result } from '../../types/result';
+import { Router } from '@angular/router';
+import { ResultService } from '../../service/result/result.service';
 
 @Component({
   selector: 'app-game-board',
@@ -11,16 +15,18 @@ import { Answer } from '../../types/answer';
   styleUrl: './game-board.component.css'
 })
 export class GameBoardComponent implements OnInit {
-  time = 15;
   playerSequence: String[] = [];
   sequence: Sequence[] = [];
+  level : number = 1;
 
   @ViewChild(CardComponent) cardComponent: CardComponent | undefined;
+  @ViewChild(ScoreComponent) scoreComponent: ScoreComponent | undefined;
 
-  constructor(@Inject(GameService) private gameService: GameService
-) { }
+  constructor(
+    private gameService: GameService,
+    private resultService: ResultService, 
+    private router: Router) { }
   ngOnInit(): void {
-    this.gameService.startNewGame();
     this.gameService.generateNewSequence();
     this.sequence = this.gameService.getSequence();
     setTimeout(() => {this.cardComponent?.playSequence(), this.cardComponent?.startCountdown()}, 2000);
@@ -33,11 +39,16 @@ export class GameBoardComponent implements OnInit {
     console.log("answer",answer);
    let isCorrect:Boolean = this.gameService.checkAnswer(answer);
     if (isCorrect){ 
-      console.log('Correct! Generating new sequence...');
+      this.level++;
+      this.scoreComponent?.calculateScore(answer.timeRemaining);
       this.sequence = this.gameService.getSequence();
       setTimeout(() => {this.cardComponent?.playSequence(), this.cardComponent?.startCountdown()}, 1000);
     }else{
-      console.log('Incorrect! Try again.');
+      this.resultService.setResult({id: 0 , score: this.scoreComponent?.getScore()||0, level: this.level, sequenceChosen: answer.playerSequence, sequenceCorrect: this.sequence});
     }
+  }
+
+  resetSequence(): void {
+    this.cardComponent?.resetSequence();
   }
 }
