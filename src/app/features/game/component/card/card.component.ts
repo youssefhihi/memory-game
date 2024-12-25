@@ -20,7 +20,7 @@ export class CardComponent implements OnChanges {
   @Input() sequence: Sequence[] = [];
   shuffledSequence: Sequence[] = [];
   playerSequence: Answer = { playerSequence: [], timeRemaining: 0 };
-
+  isPlaying: boolean = false;
   time: number = 5;
   dateStart: number = 0;
   cardStates: { [key: number]: string } = {};
@@ -34,10 +34,13 @@ export class CardComponent implements OnChanges {
     }
   }
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) {
+    console.log("CardComponent heeeeeeeere")
+  }
 
      startCountdown() {
-      this.time = 15;
+       this.time = 5;
+      this.isPlaying = true;
       this.ngZone.runOutsideAngular(() => {
         const intervalId = setInterval(() => {
           this.ngZone.run(() => {
@@ -45,6 +48,7 @@ export class CardComponent implements OnChanges {
             if (this.time <= 0) {
               clearInterval(intervalId); 
               this.dateStart = Date.now();
+              this.isPlaying = false;
             }
           });
         }, 1000);
@@ -94,5 +98,12 @@ export class CardComponent implements OnChanges {
     return this.playerSequence;
   }
 
+  resetSequence(): void {
+    this.playerSequence = { playerSequence: [], timeRemaining: 0 };
+  }
+
+  sequencePlaying(): boolean {
+    return this.isPlaying;
+  }
 
 }
