@@ -6,13 +6,15 @@ import { GameBoardComponent } from './component/game-board/game-board.component'
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { CardComponent } from './component/card/card.component';
 
 const routes: Routes = [
   { path: 'game', component: GameBoardComponent }
 ];
 @NgModule({
   declarations: [
-    GameBoardComponent
+    GameBoardComponent,
+    CardComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

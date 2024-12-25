@@ -1,5 +1,6 @@
-import { Sequence } from './../../../features/game/types/sequence';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Answer } from './../../types/answer';
+import { Sequence } from '../../types/sequence';
+import { Component, Input, SimpleChanges,NgZone ,OnChanges } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -15,23 +16,41 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ]),
   ],
 })
-export class CardComponent {
- @Input() sequence: Sequence[] = [];
+export class CardComponent implements OnChanges {
+  @Input() sequence: Sequence[] = [];
   shuffledSequence: Sequence[] = [];
-  playerSequence: Sequence[] = [];
+  playerSequence: Answer = { playerSequence: [], timeRemaining: 0 };
+
+  time: number = 5;
+  dateStart: number = 0;
   cardStates: { [key: number]: string } = {};
 
-  ngOnInit(): void {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['sequence']) {
+      this.playerSequence = { playerSequence: [], timeRemaining: 0 };
       this.shuffleSequence();
-      console.log('ngOnInit is called!');
+      console.log('ngOnChanges: sequence updated');
+    }
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['sequence']) {
-  //     // Whenever the 'sequence' array changes, call shuffleSequence
-  //     console.log('Sequence changed:', changes['sequence']);
-  //     this.shuffleSequence();
-  //   }
-  // }
+
+  constructor(private ngZone: NgZone) {}
+
+     startCountdown() {
+      this.time = 15;
+      this.ngZone.runOutsideAngular(() => {
+        const intervalId = setInterval(() => {
+          this.ngZone.run(() => {
+            this.time--;
+            if (this.time <= 0) {
+              clearInterval(intervalId); 
+              this.dateStart = Date.now();
+            }
+          });
+        }, 1000);
+      });
+    }
+  
 
   shuffleSequence(): void {
     this.shuffledSequence = [...this.sequence];
@@ -45,6 +64,7 @@ export class CardComponent {
   }
 
   playSequence(): void {
+
     const sortedSequence = this.sequence.sort((a, b) => a.order - b.order);
     const delayPerCard = Math.min(15000, sortedSequence.length * 1000) / sortedSequence.length;
 
@@ -63,10 +83,16 @@ export class CardComponent {
   }
 
   onCardClick(card: Sequence): void {
-    this.playerSequence.push(card);  
+    console.log('Card clicked:', card);
+    this.playerSequence.playerSequence.push(card);  
+    
   }
-
-  getPalyerSequence(): Sequence[] {
+  
+  validateSequence(): Answer {
+    let timeRemaining = (Date.now() - this.dateStart ) / 1000;
+    this.playerSequence.timeRemaining = timeRemaining;
     return this.playerSequence;
   }
+
+
 }

@@ -6,10 +6,17 @@
       [@illuminate]="cardStates[card.order]"
       [style.backgroundColor]="card.colorHex"
       (click)="onCardClick(card)"
+      [disabled]="time !== 0"
       class="w-24 h-24 rounded-xl border-4 border-gray-800 transition-all"
     >
     {{ card.order }}</button>
   </div>
  
 </div>
+<!-- Time Remaining -->
+<div class="mb-8">
+  <p class="text-lg">Time Remaining: <span class="font-bold">{{ time }}s</span></p>
+</div>
+
+<!-- Validation & Reset Buttons -->
 
