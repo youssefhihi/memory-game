@@ -5,23 +5,16 @@
 
   
 
-      <div class="mb-8">
+     
       <p class="text-xl font-semibold mb-4">Reproduce the sequence:</p>
-        <div class="grid grid-cols-2 gap-4">
-            <app-card [sequence]="sequence"></app-card>      
-        </div>
-    </div>
+            <app-card [sequence]="sequence" ></app-card>      
+     
   
-    <!-- Time Remaining -->
-    <div class="mb-8">
-      <p class="text-lg">Time Remaining: <span class="font-bold">15s</span></p>
-    </div>
-  
-    <!-- Validation & Reset Buttons -->
-    <div class="mb-8 flex space-x-4">
-      <button class="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">Valider</button>
-      <button class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
-    </div>
+            <div class="mb-8 flex space-x-4">
+                <button (click)="validateSequence()" class="bg-blue-500 text-white py-2 px-6 rounded-full text-lg hover:bg-blue-600 transition duration-300">Valider</button>
+                <button class="bg-gray-500 text-white py-2 px-6 rounded-full text-lg hover:bg-gray-600 transition duration-300">Réinitialiser</button>
+              </div>
+              
   
     <!-- Game Over Message -->
     <div class="text-center mt-8">

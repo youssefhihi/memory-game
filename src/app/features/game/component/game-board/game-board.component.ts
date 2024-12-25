@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild  } from '@angular/core';
 import { GameService } from '../../service/game/game.service';
 import { Sequence } from '../../types/sequence';
-import { CardComponent } from '../../../../shared/components/card/card.component';
+import { CardComponent } from '../card/card.component';
+import { Answer } from '../../types/answer';
 
 @Component({
   selector: 'app-game-board',
@@ -16,18 +17,27 @@ export class GameBoardComponent implements OnInit {
 
   @ViewChild(CardComponent) cardComponent: CardComponent | undefined;
 
-  constructor(@Inject(GameService) private gameService: GameService) { }
+  constructor(@Inject(GameService) private gameService: GameService
+) { }
   ngOnInit(): void {
     this.gameService.startNewGame();
-    this.gameService.nextLevel(); 
     this.gameService.generateNewSequence();
     this.sequence = this.gameService.getSequence();
-    setTimeout(() => this.playSequence(), 1000);
+    setTimeout(() => {this.cardComponent?.playSequence(), this.cardComponent?.startCountdown()}, 2000);
   }
 
-  playSequence(){
-    this.cardComponent?.playSequence();
+
+  validateSequence(): void {
+    const answer = this.cardComponent?.validateSequence();
+    if(!answer) return;
+    console.log("answer",answer);
+   let isCorrect:Boolean = this.gameService.checkAnswer(answer);
+    if (isCorrect){ 
+      console.log('Correct! Generating new sequence...');
+      this.sequence = this.gameService.getSequence();
+      setTimeout(() => {this.cardComponent?.playSequence(), this.cardComponent?.startCountdown()}, 1000);
+    }else{
+      console.log('Incorrect! Try again.');
+    }
   }
-  
-  
 }

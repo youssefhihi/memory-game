@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { log } from 'console';
 import { Sequence } from '../../types/sequence';
+import { Answer } from '../../types/answer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  private playerSequence: string[] = [];
   private sequence: Sequence[] = [];
   private score: number = 0;
   private level: number = 1;
@@ -16,15 +16,29 @@ export class GameService {
 
    generateNewSequence() : Sequence[] {
     let color: string;
-    let newOrder: number;
+    let newOrder: number = 0;
+    let attempts = 0;
+    const maxAttempts = 1000; // Arbitrary limit to prevent infinite loops
 
     do {
       color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    } while (this.sequence.some(seq => seq.colorHex === color));
+      console.log("from loop color", color);
+    } while (this.sequence.some(sequence => sequence.colorHex === color));
 
-    do{
-      newOrder =Math.floor(Math.random() * this.sequence.length + 1);
-    }while(this.sequence.find(sequence => sequence.order === newOrder));
+    
+    while (attempts < maxAttempts) {
+      newOrder = Math.floor(Math.random() * (this.sequence.length + 1)) + 1;
+      console.log("from loop newOrder", newOrder);
+      const foundSequence = this.sequence.find(sequence => sequence.order === newOrder);
+      if (!foundSequence) {
+        break; 
+      }
+      attempts++;
+    }
+    
+    if (attempts === maxAttempts) {
+      throw new Error("Could not generate a unique order after 1000 attempts.");
+    }
 
     this.sequence.push({ id: this.sequence.length + 1, colorHex: color, order: newOrder});
     return this.sequence;
@@ -35,14 +49,28 @@ export class GameService {
     return [...this.sequence];
   }
 
-  checkAnswer(playerSequence: string[]): boolean {
-      if(JSON.stringify(playerSequence) !== JSON.stringify(this.sequence)){
-        return false;
-      }else{
+  checkAnswer(playerSequence: Answer): boolean {
+      if(JSON.stringify(playerSequence.playerSequence) === JSON.stringify(this.sequence)){
+        console.log('Correct! Generating new sequence... check');
+        this.level++;
+        this.calculateScore(playerSequence.timeRemaining);
+        this.generateNewSequence();
         return true;
+      }else{
+        this.resetSequence();
+        return false;
     }
   }
 
+  private calculateScore(timeTaken: number): void {
+    console.log("hi", timeTaken);
+    const baseScore = 10;
+    const bonusPoints = 50;
+    const timeBonus = bonusPoints / (timeTaken + 1);
+    const totalScore = baseScore + Math.round(timeBonus);
+    console.log('Total Score:', totalScore);
+    this.score += totalScore;
+  }
   
  
   
@@ -51,15 +79,11 @@ export class GameService {
   }
 
   startNewGame(): void {
-    this.playerSequence = [];
     this.score = 0;
     this.level = 1;
   
   }
 
-  nextLevel(): void {
-    this.level++;
 
-  }
 
 }
