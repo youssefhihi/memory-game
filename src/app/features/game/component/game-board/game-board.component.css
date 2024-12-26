@@ -1,14 +1,17 @@
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
+
   
 
   button[disabled] {
     cursor: not-allowed !important;
     opacity: 0.6
   }
+  .scrollbar-hide {
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+    overflow-y: scroll; 
+  }
   
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }  
+

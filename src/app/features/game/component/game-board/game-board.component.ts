@@ -19,6 +19,8 @@ export class GameBoardComponent implements OnInit {
   sequence: Sequence[] = [];
   level : number = 1;
   disabled: boolean = false;
+  playerName: string = '';
+  msg: string = "game on!";
   gameOverMessage: string | null = null;
   @ViewChild(CardComponent) cardComponent: CardComponent | undefined;
   @ViewChild(ScoreComponent) scoreComponent: ScoreComponent | undefined;
@@ -28,6 +30,8 @@ export class GameBoardComponent implements OnInit {
     private resultService: ResultService
   ) { }
   ngOnInit(): void {
+    this.playerName = localStorage.getItem('playerName') || 'unknown player';
+    this.msg = "Alright, "+ this.playerName +" let's light it up! 🎮✨";
     this.startNewLevel();
   }
   
@@ -56,10 +60,23 @@ export class GameBoardComponent implements OnInit {
       this.level++;
       this.scoreComponent?.calculateScore(answer.timeRemaining);
       this.startNewLevel();
+      if (this.level > 10 && this.level < 20) {
+        this.msg = "Level " + this.level + "? Impressive! You're basically a memory ninja now! 😎🥷";
+      } else if (this.level <= 10 && this.level > 5) {
+        this.msg = "Level " + this.level + "? You're a quick learner! Keep it up! 😊🚀";
+      } else if (this.level <= 5) {
+        this.msg = "It's just the beginning, champ! 😌🐣 Keep going!";
+      } else if (this.level >= 18 && this.level < 25) {
+        this.msg = "Whoa, {{ playerName }}! You're soaring! 🤩 Memory master in the making! 🎩✨";
+      } else if (this.level >= 25) {
+        this.msg = "Level " + this.level + "? Unstoppable! You're on a roll! 😲🔥";
+      }
+      
     }else{
       this.gameOverMessage = "Wrong answer. You lost!";
       this.gameOver({id: 0 , score: this.scoreComponent?.getScore()||0, level: this.level, sequenceChosen: answer.playerSequence, sequenceCorrect: this.sequence});
       this.disabled = true;
+      this.msg = "Whoa there, " + this.playerName +"! Are you sure you're not colorblind? 🎨👀"
     }
   }
 
