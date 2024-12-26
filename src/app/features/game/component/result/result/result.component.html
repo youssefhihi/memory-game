@@ -1,47 +1,66 @@
-<div class="result-container text-center p-8 bg-gradient-to-r from-gray-900 via-black to-gray-800  min-h-screen flex flex-col justify-center items-center text-white">
-  <div class="absolute top-10 left-10 animate-bounce ">
+<div class="result-container text-center px-8 py-2 bg-gradient-to-r from-gray-900 via-black to-gray-800 min-h-screen flex space-x-8 justify-center items-center text-white">
+  <div class="absolute top-10 left-10 animate-bounce">
     <img src="imgs/logo.webp" alt="Star" class="w-12 h-12 opacity-70 rounded-full" />
   </div>
+  <div class="absolute top-20 right-36 animate-bounce w-44 h-44">
   <app-img
-      [imageUrl]="'imgs/game-over.gif'"
-      altText="Game Logo"
-      class="w-32 h-32"
-    ></app-img>  
-  <!-- Result Details Section -->
-  <div class="result-details mb-8 w-full max-w-6xl bg-gradient-to-r from-gray-700 to-gray-600 p-6 rounded-lg shadow-lg">
-    <div class="flex flex-col justify-center">
-      <!-- Loop over results -->
-      <div *ngFor="let result of results" class="mb-8">
-        <p class="text-xl font-bold mb-2">Game number : <span class="text-yellow-300">{{ result.id }}</span></p>
-        <div class="mb-6">
-          <p class="text-lg font-bold mb-2">Score: <span class="text-yellow-300">{{ result.score }}</span></p>
-          <p class="text-lg font-bold mb-4">Level: <span class="text-yellow-300">{{ result.level }}</span></p>
-        </div>
+    [imageUrl]="'imgs/game-over.gif'"
+    altText="Game Logo"
+    class=""
+  ></app-img>
+  </div>
+  <div class="flex flex-col justify-center items-center w-[80%] pt-2">
 
-        <!-- Sequence Chosen -->
-        <div>
-          <p class="text-md font-semibold mb-4 text-green-300">Sequence Chosen</p>
-          <div class="grid grid-cols-4 gap-2 justify-items-center bg-red-500 p-4 rounded-lg">
+    <div class="result-details mb-8 w-full bg-gradient-to-r from-gray-700 to-black bg-opacity-50  p-6 rounded-lg shadow-lg overflow-y-scroll scrollbar-hide max-h-[90vh]">
+      <div class="flex flex-col justify-center">
+        <div *ngFor="let result of results" class="mb-8">
+          <p class="text-xl font-bold mb-2">
+            Game number: <span class="text-yellow-300">{{ result.id }}</span>
+          </p>
+          <div class="mb-6">
+            <p class="text-lg font-bold mb-2">
+              Score: <span class="text-yellow-300">{{ result.score }}</span>
+            </p>
+            <p class="text-lg font-bold mb-4">
+              Level: <span class="text-yellow-300">{{ result.level }}</span>
+            </p>
+          </div>
+
+          <div>
+            <p class="text-md font-semibold mb-4 text-green-300">
+              Sequence Chosen
+            </p>
             <div
-              *ngFor="let card of result.sequenceChosen"
-              [style.backgroundColor]="card.colorHex"
-              class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+              class="grid grid-cols-4 gap-2 justify-items-center bg-red-300 p-4 rounded-lg"
             >
-              <span class="text-white font-medium">Order: {{ card.order }}</span>
+              <div
+                *ngFor="let card of result.sequenceChosen"
+                [style.backgroundColor]="card.colorHex"
+                class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+              >
+                <span class="text-white font-medium">
+                  Order: {{ card.order }}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Sequence Correct -->
-        <div class="mt-10">
-          <p class="text-md font-semibold mb-4 text-green-300">Sequence Correct</p>
-          <div class="grid grid-cols-4 gap-2 justify-items-center bg-green-500 p-4 rounded-lg">
+          <div class="mt-10">
+            <p class="text-md font-semibold mb-4 text-green-300">
+              Sequence Correct
+            </p>
             <div
-              *ngFor="let card of result.sequenceCorrect"
-              [style.backgroundColor]="card.colorHex"
-              class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+              class="grid grid-cols-4 gap-2 justify-items-center bg-green-500 p-4 rounded-lg"
             >
-              <span class="text-white font-medium">Order: {{ card.order }}</span>
+              <div
+                *ngFor="let card of result.sequenceCorrect"
+                [style.backgroundColor]="card.colorHex"
+                class="w-24 h-24 rounded-xl border-4 border-gray-800 flex items-center justify-center"
+              >
+                <span class="text-white font-medium">
+                  Order: {{ card.order }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -49,26 +68,33 @@
     </div>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="actions mt-8 space-y-10 flex flex-col w-full  px-96 ">
-      <app-button 
-        [disabled]="false" 
+    <!-- Actions -->
+    <div class="actions mt-8 space-y-10 flex flex-col w-[30%]">
+      <app-button
+        [disabled]="false"
         routerLink="/game"
-        [value]="'Play Again'" 
-        class="w-full rounded-full bg-blue-600 shadow-[inset_0px_2px_4px_0px_#8FFFFD,inset_0px_-2px_4px_0px_#f18c8c,0px_-2px_16px_0px_#f18c8c,0px_2px_16px_0px_#8FFFFD] active:shadow-[inset_0px_-2px_4px_0px_#f8e0e0,inset_0px_2px_4px_0px_#f18c8c,0px_2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0]"></app-button>
-  
-      <app-button 
-        [disabled]="false" 
-        (click)="exitGame()" 
-        [value]="'Exit'" 
-        class="w-full rounded-full bg-red-600 shadow-[inset_0px_2px_4px_0px_#f8e0e0,inset_0px_-2px_4px_0px_#f18c8c,0px_-2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0] active:shadow-[inset_0px_-2px_4px_0px_#f8e0e0,inset_0px_2px_4px_0px_#f18c8c,0px_2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0]"></app-button>
-  </div>
-  
-  
-  
+        [value]="'Play Again'"
+        class="w-full rounded-full bg-blue-600 shadow-[inset_0px_2px_4px_0px_#8FFFFD,inset_0px_-2px_4px_0px_#f18c8c,0px_-2px_16px_0px_#f18c8c,0px_2px_16px_0px_#8FFFFD] active:shadow-[inset_0px_-2px_4px_0px_#f8e0e0,inset_0px_2px_4px_0px_#f18c8c,0px_2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0]"
+      ></app-button>
+
+      <app-button
+        [disabled]="false"
+        (click)="exitGame()"
+        [value]="'Exit'"
+        class="w-full rounded-full bg-red-600 shadow-[inset_0px_2px_4px_0px_#f8e0e0,inset_0px_-2px_4px_0px_#f18c8c,0px_-2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0] active:shadow-[inset_0px_-2px_4px_0px_#f8e0e0,inset_0px_2px_4px_0px_#f18c8c,0px_2px_16px_0px_#f18c8c,0px_2px_16px_0px_#f8e0e0]"
+      ></app-button>
+    </div>
+
+  <!-- Background animations -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="animate-pulse absolute w-96 h-96 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/3 -translate-y-1/2 top-1/4 left-1/4"></div>
-    <div class="animate-pulse absolute w-72 h-72 bg-gradient-to-r from-pink-500 to-red-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 top-3/4 right-1/4"></div>
-    <div class="animate-pulse absolute w-60 h-60 bg-gradient-to-r from-purple-500 to-blue-500 opacity-20 rounded-full filter blur-2xl transform translate-x-1/4 -translate-y-1/4 top-56 right-28"></div>
+    <div
+      class="animate-pulse absolute w-96 h-96 bg-gradient-to-r from-blue-500 to-purple-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/3 -translate-y-1/2 top-1/4 left-1/4"
+    ></div>
+    <div
+      class="animate-pulse absolute w-72 h-72 bg-gradient-to-r from-pink-500 to-red-500 opacity-20 rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 top-3/4 right-1/4"
+    ></div>
+    <div
+      class="animate-pulse absolute w-60 h-60 bg-gradient-to-r from-purple-500 to-blue-500 opacity-20 rounded-full filter blur-2xl transform translate-x-1/4 -translate-y-1/4 top-56 right-28"
+    ></div>
   </div>
 </div>

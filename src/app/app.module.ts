@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { GameModule } from './features/game/game.module';
 import { WelcomeModule } from './features/welcome/welcome.module';
+import { ErrorsModule } from './features/errors/errors.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { WelcomeModule } from './features/welcome/welcome.module';
     AppRoutingModule,
     SharedModule,
     GameModule,
-    WelcomeModule
+    WelcomeModule,
+    ErrorsModule
   ],
   providers: [
     provideClientHydration(withEventReplay())
