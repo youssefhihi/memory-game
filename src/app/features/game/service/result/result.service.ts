@@ -18,4 +18,7 @@ private result: Result[] = [];
     return this.result;
   }
 
+  clearResults() {
+    this.result = [];
+  }
 }
