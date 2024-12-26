@@ -1,22 +1,21 @@
 <!-- card.component.html -->
-<div class="flex flex-wrap justify-center items-center gap-5 mt-10">
-  <!-- Loop through the shuffled sequence and create a card for each color -->
-  <div *ngFor="let card of shuffledSequence" class="relative">
+<div class="mb-32 px-8">
+  <p class="text-3xl font-bold shadow-sm bg-clip-text text-transparent bg-gradient-to-r from-red-200 via-purple-300 to-pink-200">Time Remaining : <span class="text-yellow-300 font-mono">{{ time }}s</span></p>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-5 mb-8">
+  <div *ngFor="let card of shuffledSequence" [ngClass]="time !== 0 ? '' : 'active:scale-90'">
     <button
-      [@illuminate]="cardStates[card.order]"
-      [style.backgroundColor]="card.colorHex"
-      (click)="onCardClick(card)"
-      [disabled]="time !== 0"
-      class="w-24 h-24 rounded-xl border-4 border-gray-800 transition-all"
-    >
-    {{ card.order }}</button>
+    [@illuminate]="cardStates[card.order]"
+    [style.backgroundColor]="card.colorHex"
+    (click)="onCardClick(card)"
+    [disabled]="time !== 0"
+    class="w-28 h-28 rounded-full border-2 border-gray-800 transition-all duration-300"
+  >
+    {{ card.order }}
+  </button>
+  
   </div>
  
 </div>
-<!-- Time Remaining -->
-<div class="mb-8">
-  <p class="text-lg">Time Remaining: <span class="font-bold">{{ time }}s</span></p>
-</div>
 
-<!-- Validation & Reset Buttons -->
 

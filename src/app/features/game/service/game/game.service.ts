@@ -27,28 +27,17 @@ export class GameService {
   }
 
   checkAnswer(playerSequence: Answer): boolean {
-
-    if(playerSequence.playerSequence.length === 0){
-      console.log('No answer!');
+    if(playerSequence.playerSequence.length !== this.sequence.length) return false;
+    if(!playerSequence.playerSequence.every((card, index) => card.order === this.sequence[index].order)){
       this.gameOver();
       return false;
     }
-
-    if(playerSequence.playerSequence.every((card, index) => card.order === this.sequence[index].order)){
-        console.log('Correct! Generating new sequence... check');
-        this.generateNewSequence();
-        return true;
-      }else{
-        console.log('Incorrect!');
-        this.gameOver();
-        return false;
-    }
+    return true;
   }
 
   
   gameOver(): Sequence[] {
     return this.sequence = [];
-
   }
 
 
