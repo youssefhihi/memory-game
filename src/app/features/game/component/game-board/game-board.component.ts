@@ -18,8 +18,8 @@ export class GameBoardComponent implements OnInit {
   playerSequence: String[] = [];
   sequence: Sequence[] = [];
   level : number = 1;
-  msg: string = '';
-  disalbed: boolean = false;
+  disabled: boolean = false;
+  gameOverMessage: string | null = null;
   @ViewChild(CardComponent) cardComponent: CardComponent | undefined;
   @ViewChild(ScoreComponent) scoreComponent: ScoreComponent | undefined;
 
@@ -37,7 +37,7 @@ export class GameBoardComponent implements OnInit {
     setTimeout(() => {
       this.cardComponent?.playSequence();
       this.cardComponent?.startCountdown();
-    }, 2000);
+    }, 500);
   }
 
   validateSequence(): void {
@@ -45,7 +45,9 @@ export class GameBoardComponent implements OnInit {
     let answer: Answer = this.cardComponent?.validateSequence()||{ playerSequence: [], timeRemaining: 0 };
     if(answer.playerSequence.length === 0){
       console.log("nooo answer",answer);
+      this.gameOverMessage = "No answer provided. You lost!";
       this.gameOver({id: 0 , score: this.scoreComponent?.getScore()||0, level: this.level, sequenceChosen: answer.playerSequence, sequenceCorrect: this.sequence});
+      this.disabled = true;
       return; 
     }
     console.log("answer",answer);
@@ -53,10 +55,11 @@ export class GameBoardComponent implements OnInit {
     if (isCorrect){ 
       this.level++;
       this.scoreComponent?.calculateScore(answer.timeRemaining);
-      this.sequence = this.gameService.getSequence();
-      setTimeout(() => {this.cardComponent?.playSequence(), this.cardComponent?.startCountdown()}, 2000);
+      this.startNewLevel();
     }else{
+      this.gameOverMessage = "Wrong answer. You lost!";
       this.gameOver({id: 0 , score: this.scoreComponent?.getScore()||0, level: this.level, sequenceChosen: answer.playerSequence, sequenceCorrect: this.sequence});
+      this.disabled = true;
     }
   }
 
@@ -67,6 +70,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   isPlaying(): boolean {
+    if(this.disabled)  return true;
     return this.cardComponent?.sequencePlaying() || false;
   }
  
