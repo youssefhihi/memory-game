@@ -39,7 +39,7 @@ export class CardComponent implements OnChanges {
   }
 
      startCountdown() {
-       this.time = 15;
+       this.time = 5;
       this.isPlaying = true;
       this.ngZone.runOutsideAngular(() => {
         const intervalId = setInterval(() => {

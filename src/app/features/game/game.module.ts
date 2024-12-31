@@ -10,13 +10,14 @@ import { CardComponent } from './component/card/card.component';
 import { ScoreComponent } from './component/score/score/score.component';
 import { ResultComponent } from './component/result/result/result.component';
 import { resultGuard } from '../../core/guards/resultPage/result.guard';
+import { WelcomeComponent } from '../welcome/component/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     GameBoardComponent,
     CardComponent,
     ScoreComponent,
-    ResultComponent
+    ResultComponent,
   ],
   imports: [
     CommonModule,
