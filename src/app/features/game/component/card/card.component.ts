@@ -30,12 +30,10 @@ export class CardComponent implements OnChanges {
     if (changes['sequence']) {
       this.playerSequence = { playerSequence: [], timeRemaining: 0 };
       this.shuffleSequence();
-      console.log('ngOnChanges: sequence updated');
     }
   }
 
   constructor(private ngZone: NgZone) {
-    console.log("CardComponent heeeeeeeere")
   }
 
      startCountdown() {

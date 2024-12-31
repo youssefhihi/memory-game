@@ -5,7 +5,6 @@ import { Sequence } from '../../types/sequence';
 import { CardComponent } from '../card/card.component';
 import { Answer } from '../../types/answer';
 import { ScoreComponent } from '../score/score/score.component';
-import { Router } from '@angular/router';
 import { ResultService } from '../../service/result/result.service';
 
 @Component({
@@ -48,7 +47,6 @@ export class GameBoardComponent implements OnInit {
     if (this.isPlaying()) return; 
     let answer: Answer = this.cardComponent?.validateSequence()||{ playerSequence: [], timeRemaining: 0 };
     if(answer.playerSequence.length === 0){
-      console.log("nooo answer",answer);
       this.gameOverMessage = "No answer provided. You lost!";
       this.gameOver({id: 0 , score: this.scoreComponent?.getScore()||0, level: this.level, sequenceChosen: answer.playerSequence, sequenceCorrect: this.sequence});
       this.disabled = true;
